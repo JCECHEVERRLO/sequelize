@@ -1,0 +1,68 @@
+    <!-- views/index.ejs -->
+    <%- include('../layouts/header', {title: 'Lista Tareas'}); -%>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="alert alert-success text-center">mis tareas</h1>
+                </div>
+            </div>
+            <div class="row">
+                <form class="row g-3 align-items-center my-3" action="/todos" method="post">
+                    <div class="col-auto">
+                        <label for="search" class="col-form-label">Search</label>
+                    </div>
+                    <div class="col-auto">
+                    <input type="text" id="search" name="search" class="form-control" value="<%= typeof search !== 'undefined' ? search : '' %>">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-secondary">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">tittle</th>
+                                <th scope="col">completed</th>
+                                
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% todos.map( todo => { %>
+                                <tr>
+                                    <th scope="row"><%= todo.id %></th>
+                                    <td><%= todo.title%></td>
+                                    <td><%= todo.completed %></td>
+                
+                                    <td>
+                                        <form 
+                                        action="/todos/delete/<%= todo.id %>" 
+                                        method="post" 
+                                        onsubmit="return confirm('Are you sure you want to delete this ?');"
+                                        >
+                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-grid">
+                    <a href="/create" class="btn btn-outline-secondary">
+                        Create new project
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    <%- include('../layouts/footer'); -%>
+
+
